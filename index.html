@@ -6,6 +6,7 @@
     <meta name="keywords" content="Math, Solve, Chart">
     <meta name="author" content="Ahmed Atef">
     <title>3x+1 Math Problem</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
     <style>
       h2, #form, #output, .click {
         text-align: center;
@@ -203,10 +204,10 @@
           hint.querySelector(".show").style.display = "none";
         }
         let text = tooltip.querySelector(".show");
-        if ( text.style.display == "none" ) {
-          text.style.display = "block";
-        } else {
+        if ( text.style.display == "block" ) {
           text.style.display = "none";
+        } else {
+          text.style.display = "block";
         }
       }
 
