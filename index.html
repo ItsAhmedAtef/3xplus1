@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Math, Solve, Chart">
+    <meta name="author" content="Ahmed Atef">
+    <title>3x+1 Math Problem</title>
+    <style>
+      h2, #form, #output, .click {
+        text-align: center;
+      }
+      #form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      #form div {
+        background-color: grey;
+        padding: 10px;
+      }
+      #output {
+        color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .show {
+        display: none;
+        z-index: 1;
+        position: absolute;
+        color: #fff;
+        background-color: #000;
+        right: 60px;
+        max-width: 200px;
+        padding: 5px;
+        border-radius: 8px;
+        margin-left: 10px;
+      }
+      #quote .click {
+        top: 10px;
+        right: 10px;
+        position: absolute;
+      }
+      #quote .click, #quote .show {
+        top: 180px;
+      }
+      #hint .click, #hint .show {
+        top: 120px;
+      }
+      .click {
+        display: inline;
+        border: 3px solid yellow;
+        background-color: #24272A;
+        padding: 10px;
+        right: 10px;
+        position: absolute;
+        color: yellow;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+      #showlogs {
+        color: #fff;
+        background-color: #0062cc;
+        border-color: #005cbf;
+        cursor: pointer;
+        display: inline-block;
+        border: 1px solid transparent;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px;
+      }
+      @media only screen and (min-width: 540px) {
+        .show {
+          max-width: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>3 <span style="color: #eb1e1e;">X</span> + 1 Math Problem</h2>
+      <div id="form">
+        <div>
+          <input type="number" id="input" value="" placeholder="Enter X">
+          <button id="submit" type="button">Solve</button>
+        </div>
+      </div>
+      <div id="hint">
+        <p class="click">&#128161;</p>
+        <p class="show"><span style="color: yellow;">How it works?</span> Two Rules.<br> Pick any number, if the number is odd, we multiply by three and add one, and if the number is even we devide by two. keep applying these two rules for the result too.</p>
+      </div>
+      <div id="quote">
+        <p class="click">&#128173;</p>
+        <p class="show">"Mathematics is not yet ripe enough for such questions."<br>- Paul Erdős</p>
+      </div>
+      <div id="chartparent">
+        <canvas id="myChart"></canvas>
+      </div>
+      <br>
+      <div id="output"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+      var submit = document.getElementById("submit");
+      var input = document.getElementById("input");
+      var output = document.getElementById("output");
+      var quote = document.getElementById("quote");
+      var hint = document.getElementById("hint");
+      var all = [];
+      var labelsall = [];
+
+      function showlogs() {
+        var logsdiv = output.querySelector("#logs");
+        var logsbutton = output.querySelector("#showlogs");
+        if (logsdiv) {
+          if (logsdiv.style.display == "none") {
+            logsdiv.style.display = "block";
+            logsbutton.innerHTML = "Hide Logs";
+          } else {
+            logsdiv.style.display = "none";
+            logsbutton.innerHTML = "Show Logs";
+          }
+        }
+      }
+
+      function myoutput(nums) {
+        labelsall = [];
+        output.innerHTML = '<button onclick="showlogs()" id="showlogs">Show Logs</button><div style="display:none;" id="logs"></div>';
+        for (let i = 0; i < nums.length; i++) {
+          labelsall.push(i);console.log(i);
+        }
+        document.getElementById("chartparent").innerHTML = '<canvas id="myChart"></canvas>';
+        var myChart = new Chart(
+          document.getElementById('myChart'),
+          {
+            type: 'line',
+            data: {
+              labels: labelsall,
+              datasets: [{
+                label: 'Collatz Conjecture graph',
+                backgroundColor: '#434fe6',
+                borderColor: '#434fe6',
+                data: nums,
+              }]
+            },
+            options: {}
+          }
+        );
+        if(!nums.includes(4)) {nums = [4,2,1];}
+        var logs = document.querySelector("#logs");
+        nums.forEach( num => {
+          if ( num % 2 ) {
+            var hold = (3*num)+1;
+              logs.innerHTML += '<p>' + num + ' is Odd (3 x '+ num + ') + 1 = <span style="color:red;">' + hold + '</span></p>';
+          } else {
+            var hold = num / 2;
+            if (num != 2) {
+              logs.innerHTML += '<p>' + num + ' is Even ' + num + ' / 2 = <span style="color:blue;">' + hold + '</span></p>';
+            } else {
+              logs.innerHTML += '<p><b style="color:blue;">&#10532;</b>&nbsp;&nbsp;&nbsp; ' + num + ' is Even ' + num + ' / 2 = <span style="color:blue;">' + hold + '</span> &nbsp;&nbsp;&nbsp;<b style="color:red;">&#10534;</b></p>';
+            }
+          }
+        });
+      }
+
+      function solve( x ) {
+        if (!isNaN(x) && parseInt(x) && x > 0) {
+          var x = parseInt(x);
+          if (!all.length) {
+            all.push(x);
+          }
+          var x_is = 'even';
+          if ( x % 2 ) {
+            x_is = 'odd';
+          }
+          if (x_is == 'even') {
+            all.push(x/2);
+            solve(x/2);
+          } else {
+            if (x!=1) {
+              all.push((3*x)+1);
+              solve((3*x)+1);
+            } else {
+              myoutput(all);
+            }
+          }
+        } else {
+          output.innerHTML = 'x is not a number';
+          document.getElementById("chartparent").innerHTML = '<canvas id="myChart"></canvas>';
+        }
+      }
+
+      function display(tooltip) {
+        if (tooltip.id == "hint") {
+          quote.querySelector(".show").style.display = "none";
+        } else {
+          hint.querySelector(".show").style.display = "none";
+        }
+        let text = tooltip.querySelector(".show");
+        if ( text.style.display == "none" ) {
+          text.style.display = "block";
+        } else {
+          text.style.display = "none";
+        }
+      }
+
+      submit.addEventListener("click", function() {
+        all = [];
+        solve(input.value);
+      });
+
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          all = [];
+          solve(input.value);
+        }
+      });
+
+      quote.addEventListener("click", function() {display(quote)});
+
+      hint.addEventListener("click", function() {display(hint)});
+
+    </script>
+  </body>
+</html>
