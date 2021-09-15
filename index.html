@@ -20,6 +20,7 @@
       #form div {
         background-color: grey;
         padding: 10px;
+        border-radius: 5px;
       }
       #output {
         color: #000;
@@ -46,7 +47,7 @@
         position: absolute;
       }
       #quote .click, #quote .show {
-        top: 180px;
+        top: 170px;
       }
       #hint .click, #hint .show {
         top: 120px;
@@ -64,7 +65,7 @@
         cursor: pointer;
         border-radius: 50%;
       }
-      #showlogs {
+      .blue {
         color: #fff;
         background-color: #0062cc;
         border-color: #005cbf;
@@ -75,6 +76,10 @@
         border-radius: 5px;
         padding: 5px;
       }
+      #mode .click {
+        top: 220px;
+        color: white;
+      }
       @media only screen and (min-width: 540px) {
         .show {
           max-width: 400px;
@@ -84,11 +89,11 @@
   </head>
   <body>
     <div>
-      <h2>3 <span style="color: #eb1e1e;">X</span> + 1 Math Problem</h2>
+      <h2 id="title">3 <span style="color: #eb1e1e;">X</span> + 1 Math Problem</h2>
       <div id="form">
         <div>
           <input type="number" id="input" value="" placeholder="Enter X">
-          <button id="submit" type="button">Solve</button>
+          <button id="submit" class="blue" type="button">Solve</button>
         </div>
       </div>
       <div id="hint">
@@ -99,9 +104,10 @@
         <p class="click">&#128173;</p>
         <p class="show">"Mathematics is not yet ripe enough for such questions."<br>- Paul Erdős</p>
       </div>
-      <div id="chartparent">
-        <canvas id="myChart"></canvas>
+      <div id="mode">
+        <p class="click">&#127774;</p>
       </div>
+      <div id="chartparent"><canvas id="myChart"></canvas></div>
       <br>
       <div id="output"></div>
     </div>
@@ -113,6 +119,11 @@
       var output = document.getElementById("output");
       var quote = document.getElementById("quote");
       var hint = document.getElementById("hint");
+      var title = document.getElementById("title");
+      var tooltips = document.querySelectorAll('.show');
+      var mode = document.getElementById("mode"); // id
+      var MODE = localStorage.getItem('mode'); // browser storage value
+      var chartparent = document.getElementById("chartparent");
       var all = [];
       var labelsall = [];
 
@@ -132,11 +143,11 @@
 
       function myoutput(nums) {
         labelsall = [];
-        output.innerHTML = '<button onclick="showlogs()" id="showlogs">Show Logs</button><div style="display:none;" id="logs"></div>';
+        output.innerHTML = '<button onclick="showlogs()" id="showlogs" class="blue">Show Logs</button><div style="display:none;" id="logs"></div>';
         for (let i = 0; i < nums.length; i++) {
-          labelsall.push(i);console.log(i);
+          labelsall.push(i);
         }
-        document.getElementById("chartparent").innerHTML = '<canvas id="myChart"></canvas>';
+        chartparent.innerHTML = '<canvas id="myChart"></canvas>';
         var myChart = new Chart(
           document.getElementById('myChart'),
           {
@@ -147,10 +158,31 @@
                 label: 'Collatz Conjecture graph',
                 backgroundColor: '#434fe6',
                 borderColor: '#434fe6',
-                data: nums,
+                data: nums
               }]
             },
-            options: {}
+            options: {
+              scales: {
+                y: {
+                  grid: {
+                    color: 'grey',
+                    borderColor: 'grey'
+                  },
+                  ticks: {
+                    color: 'grey'
+                  }
+                },
+                x: {
+                  grid: {
+                    color: 'grey',
+                    borderColor: 'grey'
+                  },
+                  ticks: {
+                    color: 'grey'
+                  }
+                }
+              }
+            }
           }
         );
         if(!nums.includes(4)) {nums = [4,2,1];}
@@ -172,7 +204,6 @@
 
       function solve( x ) {
         if (!isNaN(x) && parseInt(x) && x > 0) {
-          var x = parseInt(x);
           if (!all.length) {
             all.push(x);
           }
@@ -226,6 +257,53 @@
       quote.addEventListener("click", function() {display(quote)});
 
       hint.addEventListener("click", function() {display(hint)});
+
+      window.onload = function () {
+        if (MODE != 'light') {
+          document.body.style.backgroundColor = '#202124';
+          title.style.color = '#fff';
+          mode.innerHTML = '<p class="click">&#9789;</p>';
+          form.querySelector("div").style.backgroundColor = '#fff';
+          for (var i = 0; i < tooltips.length; i++) {
+            tooltips[i].style.backgroundColor = '#fff';
+            tooltips[i].style.color = '#000';
+            tooltips[0].querySelector("span").style.color = 'red';
+            document.styleSheets[0].cssRules[3].style.cssText = "color:#fff;display:flex;justify-content:center;align-items:center;flex-direction:column;";
+          }
+        }
+      };
+
+      document.getElementById("mode").addEventListener('click', function() {
+        quote.querySelector(".show").style.display = "none";
+        hint.querySelector(".show").style.display = "none";
+        if (MODE == 'light') {
+          document.body.style.backgroundColor = '#202124';
+          title.style.color = '#fff';
+          mode.innerHTML = '<p class="click">&#9789;</p>';
+          form.querySelector("div").style.backgroundColor = '#fff';
+          for (var i = 0; i < tooltips.length; i++) {
+            tooltips[i].style.backgroundColor = '#fff';
+            document.styleSheets[0].cssRules[3].style.cssText = "color:#fff;display:flex;justify-content:center;align-items:center;flex-direction:column;";
+            tooltips[i].style.color = '#000';
+            tooltips[0].querySelector("span").style.color = 'red';
+          }
+          localStorage.setItem('mode', 'dark');
+          MODE = 'dark';
+        } else {
+          document.body.style.backgroundColor = '#fff';
+          title.style.color = '#000';
+          mode.innerHTML = '<p class="click">&#127774;</p>';
+          form.querySelector("div").style.backgroundColor = 'grey';
+          document.styleSheets[0].cssRules[3].style.cssText = "color:#000;display:flex;justify-content:center;align-items:center;flex-direction:column;";
+          for (var i = 0; i < tooltips.length; i++) {
+            tooltips[i].style.backgroundColor = '#000';
+            tooltips[i].style.color = '#fff';
+            tooltips[0].querySelector("span").style.color = 'yellow';
+          }
+          localStorage.setItem('mode', 'light');
+          MODE = 'light';
+        }
+      });
 
     </script>
   </body>
