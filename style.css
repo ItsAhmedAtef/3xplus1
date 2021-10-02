@@ -1,0 +1,76 @@
+h2, #form, #output, .click {
+    text-align: center;
+}
+#form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#form div {
+    background-color: grey;
+    padding: 10px;
+    border-radius: 5px;
+}
+#output {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.show {
+    display: none;
+    z-index: 1;
+    position: absolute;
+    color: #fff;
+    background-color: #000;
+    right: 60px;
+    max-width: 200px;
+    padding: 5px;
+    border-radius: 8px;
+    margin-left: 10px;
+}
+#quote .click {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+}
+#quote .click, #quote .show {
+    top: 170px;
+}
+#hint .click, #hint .show {
+    top: 120px;
+}
+.click {
+    display: inline;
+    border: 3px solid yellow;
+    background-color: #24272A;
+    padding: 10px;
+    right: 10px;
+    position: absolute;
+    color: yellow;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.blue {
+    color: #fff;
+    background-color: #0062cc;
+    border-color: #005cbf;
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid transparent;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+}
+#mode .click {
+    top: 220px;
+    color: white;
+}
+@media only screen and (min-width: 540px) {
+    .show {
+        max-width: 400px;
+    }
+}
