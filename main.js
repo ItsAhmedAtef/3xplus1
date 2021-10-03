@@ -11,6 +11,9 @@ var MODE = localStorage.getItem('mode'); // browser storage value
 var chartparent = document.getElementById("chartparent");
 var all = [];
 var labelsall = [];
+var xx = '';
+var myChart = null;
+var scrollButton = document.getElementById("scrollButton");
 /***** ***** !Global variables ***** *****/
 
 function showlogs() {
@@ -33,8 +36,8 @@ function myoutput(nums) {
     for (let i = 0; i < nums.length; i++) {
         labelsall.push(i);
     }
-    chartparent.innerHTML = '<canvas id="myChart"></canvas>';
-    var myChart = new Chart(
+    chartparent.innerHTML = '<canvas id="myChart"></canvas><button id="resetZoom">Reset Zoom</button>';
+    myChart = new Chart(
         document.getElementById('myChart'),
         {
             type: 'line',
@@ -67,10 +70,31 @@ function myoutput(nums) {
                             color: 'grey'
                         }
                     }
+                },
+                plugins: {
+                    legend: {
+                        onClick: false
+                    },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'x'
+                        },
+                        zoom: {
+                            wheel: {
+                                enabled: true
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'x'
+                        }
+                    }
                 }
             }
         }
     );
+    document.getElementById('resetZoom').setAttribute("onclick","myChart.resetZoom()");
     if(!nums.includes(4)) {
         nums = [4,2,1];
     }
@@ -196,3 +220,20 @@ document.getElementById("mode").addEventListener('click', function() {
         MODE = 'light';
     }
 });
+
+function scroll() {
+    if ( document.body.scrollTop > 30 || document.documentElement.scrollTop > 30 ) {
+        scrollButton.style.display = "block";
+    } else {
+        scrollButton.style.display = "none";
+    }
+}
+
+scrollButton.addEventListener('click', function() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+});
+
+window.onscroll = function() {
+    scroll();
+};
