@@ -17,6 +17,7 @@ h2, #form, #output, .click {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-bottom: 5px;
 }
 .show {
     display: none;
@@ -29,6 +30,23 @@ h2, #form, #output, .click {
     padding: 5px;
     border-radius: 8px;
     margin-left: 10px;
+}
+#resetZoom {
+    cursor: pointer;
+}
+#scrollButton {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    z-index: 1;
+    border: none;
+    outline: none;
+    background-color: #8a2ae2;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
 }
 #quote .click {
     top: 10px;
