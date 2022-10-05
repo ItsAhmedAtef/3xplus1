@@ -1,25 +1,29 @@
 h2, #form, #output, .click {
     text-align: center;
 }
-#form {
+
+.customRed {
+    color: #eb1e1e;
+}
+
+#form, #output {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
 }
+
 #form div {
     background-color: grey;
     padding: 10px;
     border-radius: 5px;
 }
+
 #output {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    padding-bottom: 5px;
     color: #000;
 }
+
 .show {
     display: none;
     z-index: 1;
