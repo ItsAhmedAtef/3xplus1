@@ -12,7 +12,7 @@ side.addEventListener("click", (e) => {
         let clicked = (e.target.classList.contains("item")) ? e.target.id: e.target.parentElement.id;
         for ( let item of items ) {
             if (item.id === clicked) {
-                if (item.classList.contains("hideChild")) item.classList.remove("hideChild");
+                item.classList.toggle("hideChild");
             } else {
                 if (!item.classList.contains("hideChild")) item.classList.add("hideChild");
             }
