@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="Math, Solve, Chart">
     <meta name="author" content="Ahmed Atef">
@@ -12,29 +11,30 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div>
+    <div id="header">
       <h2 id="title">3 <span class="customRed">X</span> + 1 Math Problem</h2>
-      <div id="form">
-        <div>
-          <input type="number" id="input" value="" placeholder="Enter X value">
-          <button id="submit" class="blue" type="button">Solve</button>
-        </div>
+      <div>
+        <input type="number" value="" placeholder="Enter X value">
+        <button id="solve" type="button">Solve</button>
       </div>
-      <div id="hint">
-        <p class="click">&#128161;</p>
-        <p class="show"><span style="color: yellow;">How it works?</span> Two Rules.<br> Pick any number, if the number is odd, we multiply by three and add one, and if the number is even we devide by two. keep applying these two rules for the result too.</p>
+    </div>
+    <div id="side">
+      <div class="item hideChild" id="hint">
+        <span class="icon">&#128161;</span>
+        <div class="sideContent"><span>How it works?</span> Two Rules.<br> Pick any number, if the number is odd, we multiply by three and add one, and if the number is even we devide by two. keep applying these two rules for the result too.</div>
       </div>
-      <div id="quote">
-        <p class="click">&#128173;</p>
-        <p class="show">"Mathematics is not yet ripe enough for such questions."<br>- Paul Erdős</p>
+      <div class="item hideChild" id="quote">
+        <span class="icon">&#128173;</span>
+        <div class="sideContent">"Mathematics is not yet ripe enough for such questions."<br>- <span>Paul Erdős</span></div>
       </div>
-      <div id="mode">
-        <p class="click">&#127774;</p>
+      <div class="item" id="theme">
+        <span class="icon">&#127774;</span>
       </div>
-      <button type="button" id="scrollButton">up</button>
-      <div id="chartparent"><canvas id="myChart"></canvas></div>
-      <br>
-      <div id="output"></div>
+    </div>
+    <div id="output">
+      <p id="error" class="hidden customRed">Please enter a valid number</p>
+      <canvas id="myChart"></canvas>
+      <button type="button" class="hidden" id="resetZoom">Reset Zoom</button>
     </div>
     <script src="chart.js"></script>
     <script src="hammer.min.js"></script>
