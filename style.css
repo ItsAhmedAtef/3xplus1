@@ -1,99 +1,117 @@
-h2, #form, #output, .click {
-    text-align: center;
-}
-
+/** Global */
 .customRed {
     color: #eb1e1e;
 }
 
-#form, #output {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+.hidden {
+    display: none;
 }
 
-#form div {
+.hideChild div {
+    display: none;
+}
+/** !Global */
+
+#header, #side .item, #error {
+    text-align: center;
+}
+
+#header div {
+    display: inline-block;
     background-color: grey;
     padding: 10px;
     border-radius: 5px;
 }
 
+#solve, #resetZoom {
+    color: #fff;
+    background-color: #0062cc;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+#side {
+    position: absolute;
+    right: 5px;
+}
+
+#side .item {
+    background-color: #000;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid yellow;
+    margin-bottom: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+#side .item .icon {
+    margin: 7px;
+    display: block;
+}
+
+.sideContent {
+    position: absolute;
+    right: 50px;
+    top: 0;
+    color: #fff;
+    background-color: #000;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: text;
+    width: max-content;
+    max-width: 400px;
+}
+
+.sideContent span {
+    color: yellow;
+}
+
 #output {
+    display: flex;
     flex-direction: column;
+    margin-top: 25px;
+}
+
+/** Dark Theme */
+.dark {
+    background-color: #000;
+    color: #fff;
+}
+
+.dark #header div {
+    background-color: #fff;
+}
+
+.dark .sideContent {
+    background-color: #fff;
     color: #000;
 }
 
-.show {
-    display: none;
-    z-index: 1;
-    position: absolute;
-    color: #fff;
-    background-color: #000;
-    right: 60px;
-    max-width: 200px;
-    padding: 5px;
-    border-radius: 8px;
-    margin-left: 10px;
+.dark .sideContent span {
+    color: blue;
 }
-#resetZoom {
-    cursor: pointer;
+/** !Dark Theme */
+
+@media only screen and (max-width: 500px) {
+    .sideContent {
+        max-width: 300px;
+    }
 }
-#scrollButton {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 10px;
-    z-index: 1;
-    border: none;
-    outline: none;
-    background-color: #8a2ae2;
-    color: #fff;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 4px;
+
+@media only screen and (max-width: 400px) {
+    .sideContent {
+        max-width: 200px;
+    }
 }
-#quote .click {
-    top: 10px;
-    right: 10px;
-    position: absolute;
-}
-#quote .click, #quote .show {
-    top: 170px;
-}
-#hint .click, #hint .show {
-    top: 120px;
-}
-.click {
-    display: inline;
-    border: 3px solid yellow;
-    background-color: #24272A;
-    padding: 10px;
-    right: 10px;
-    position: absolute;
-    color: yellow;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-.blue {
-    color: #fff;
-    background-color: #0062cc;
-    border-color: #005cbf;
-    cursor: pointer;
-    display: inline-block;
-    border: 1px solid transparent;
-    text-align: center;
-    border-radius: 5px;
-    padding: 5px;
-}
-#mode .click {
-    top: 220px;
-    color: white;
-}
-@media only screen and (min-width: 540px) {
-    .show {
-        max-width: 400px;
+
+@media only screen and (max-width: 300px) {
+    .sideContent {
+        max-width: 100px;
     }
 }
